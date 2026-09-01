@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Enaila Rocha — Gestora Comercial da franquia Embracon Anália Franco. Consórcio de automóvel, imóvel, serviços e pesados em São Paulo.">
+<meta name="theme-color" content="#F7F1EC">
+<title>Enaila Rocha — Embracon Anália Franco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Sora:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#E30613; --red-hot:#C90C10;
+  --paper:#F7F1EC; --paper-2:#F0E7DF; --card:#FFFFFF;
+  --line:#E3D8CC;
+  --ink:#211D1A; --ink-2:#4A423B; --smoke:#8A8079;
+  --serif:'Bodoni Moda', Georgia, serif;
+  --sans:'Sora', system-ui, sans-serif;
+  --mono:'JetBrains Mono', monospace;
+  --pad: clamp(20px, 6vw, 96px);
+  --ease: cubic-bezier(.22,.7,.2,1);
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0 }
+html{ scroll-behavior:smooth }
+body{ background:var(--paper); color:var(--ink); font-family:var(--sans); font-weight:300; line-height:1.65; overflow-x:hidden }
+img{ display:block; max-width:100% }
+a{ color:inherit; text-decoration:none }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer }
+ul,ol{ list-style:none }
+::selection{ background:var(--red); color:#fff }
+
+/* loader — mantida a identidade Embracon */
+#loader{ position:fixed; inset:0; z-index:999; background:var(--paper); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; transition:opacity .6s var(--ease), visibility .6s }
+#loader.gone{ opacity:0; visibility:hidden }
+#loader img{ width:56px; opacity:0; animation:pop .5s var(--ease) .1s forwards }
+@keyframes pop{ from{ opacity:0; transform:scale(.8) } to{ opacity:1; transform:none } }
+.loader-track{ width:140px; height:2px; background:var(--line); overflow:hidden }
+.loader-track i{ display:block; height:100%; width:0; background:var(--red); animation:barGo 1.3s var(--ease) .2s forwards }
+@keyframes barGo{ to{ width:100% } }
+
+.wrap{ max-width:1180px; margin:0 auto; padding-inline:var(--pad) }
+.reveal{ opacity:0; transform:translateY(20px); transition:opacity .7s var(--ease), transform .7s var(--ease) }
+.reveal.in{ opacity:1; transform:none }
+
+/* nav */
+#nav{ position:fixed; top:0; left:0; right:0; z-index:500; display:flex; align-items:center; gap:20px; padding:20px var(--pad); transition:background .3s, padding .3s, border-color .3s; border-bottom:1px solid transparent }
+#nav.stuck{ background:rgba(247,241,236,.9); backdrop-filter:blur(14px); border-color:var(--line); padding-block:13px }
+.nav-name{ font-family:var(--serif); font-style:italic; font-size:19px; margin-right:auto }
+.nav-links{ display:flex; gap:26px; font-size:13px }
+.nav-links a{ position:relative; padding-bottom:3px }
+.nav-links a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--red); transition:width .3s var(--ease) }
+.nav-links a:hover::after{ width:100% }
+.nav-wpp{ font-size:13px; padding:9px 16px; border:1px solid var(--ink); border-radius:999px; transition:background .3s, color .3s, border-color .3s }
+.nav-wpp:hover{ background:var(--red); border-color:var(--red); color:#fff }
+#burger{ display:none; width:30px; height:22px; position:relative }
+#burger i{ position:absolute; left:0; right:0; height:2px; background:var(--ink); transition:transform .3s, opacity .2s }
+#burger i:nth-child(1){ top:0 } #burger i:nth-child(2){ top:10px } #burger i:nth-child(3){ top:20px }
+#burger.on i:nth-child(1){ transform:translateY(10px) rotate(45deg) }
+#burger.on i:nth-child(2){ opacity:0 }
+#burger.on i:nth-child(3){ transform:translateY(-10px) rotate(-45deg) }
+#drawer{ position:fixed; inset:0; z-index:490; background:var(--paper); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; opacity:0; visibility:hidden; transition:opacity .35s, visibility .35s }
+#drawer.open{ opacity:1; visibility:visible }
+#drawer a{ font-family:var(--serif); font-style:italic; font-size:30px }
+
+/* hero — assinatura serifada sobreposta à foto */
+#hero{ position:relative; padding:150px var(--pad) 0; overflow:hidden }
+.hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:0; align-items:end; max-width:1180px; margin:0 auto }
+.hero-copy{ position:relative; z-index:2; padding-bottom:80px }
+.hero-eyebrow{ font-family:var(--mono); font-size:11px; letter-spacing:.18em; color:var(--smoke); margin-bottom:22px }
+.hero-name{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(46px,7vw,92px); line-height:.98; letter-spacing:-.01em; color:var(--ink) }
+.hero-name span{ color:var(--red) }
+.hero-role{ font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; color:var(--ink-2); margin:18px 0 26px; padding-left:2px; border-left:2px solid var(--red); padding-left:14px }
+.hero-desc{ font-size:16px; color:var(--ink-2); max-width:46ch; margin-bottom:34px }
+.hero-cta{ display:flex; flex-wrap:wrap; gap:12px }
+
+.btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:999px; font-size:14px; font-weight:500; transition:transform .3s var(--ease), background .3s, box-shadow .3s }
+.btn-red{ background:var(--red); color:#fff; box-shadow:0 12px 30px -10px rgba(227,6,19,.7) }
+.btn-red:hover{ background:var(--red-hot) }
+.btn-line{ border:1px solid var(--ink); color:var(--ink) }
+.btn-line:hover{ border-color:var(--red); color:var(--red) }
+
+.hero-photo{ position:relative; z-index:1 }
+.hero-photo-frame{ position:relative; aspect-ratio:3/4; overflow:hidden; border-radius:3px 3px 0 0; background:var(--paper-2) }
+.hero-photo-frame img{ width:100%; height:100%; object-fit:cover; object-position:top center }
+.hero-photo-frame::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 60%, rgba(33,29,26,.35)); pointer-events:none }
+.hero-mark{ position:absolute; left:-18px; bottom:24px; width:44px; z-index:3; filter:drop-shadow(0 8px 16px rgba(0,0,0,.18)) }
+
+/* marquee */
+.marquee{ background:var(--red); overflow:hidden; padding:14px 0; margin-top:0 }
+.marquee-row{ display:flex; width:max-content; animation:mq 32s linear infinite }
+.marquee-row span{ font-family:var(--serif); font-style:italic; font-size:clamp(16px,2.2vw,24px); color:#fff; white-space:nowrap; display:flex; align-items:center }
+.marquee-row i{ font-style:normal; margin:0 20px; opacity:.55; font-size:.7em }
+@keyframes mq{ to{ transform:translateX(-50%) } }
+
+/* como funciona */
+.sec{ padding-block:clamp(70px,10vw,130px) }
+.sec-head{ max-width:640px; margin-bottom:52px }
+.tag{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; color:var(--red); margin-bottom:16px; display:block }
+.h2{ font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(30px,5vw,52px); line-height:1.08; letter-spacing:-.005em }
+.lead{ font-size:15.5px; color:var(--ink-2); max-width:56ch; margin-top:16px }
+
+.steps{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line) }
+.steps li{ padding:28px 22px 0; border-right:1px solid var(--line) }
+.steps li:last-child{ border-right:none }
+.step-n{ font-family:var(--mono); font-size:11px; color:var(--smoke); display:block; margin-bottom:14px }
+.steps h3{ font-family:var(--serif); font-style:italic; font-size:20px; margin-bottom:10px }
+.steps p{ font-size:14px; color:var(--ink-2) }
+
+/* modalidades — lista vertical sem imagens */
+.sec-mod{ background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line) }
+.mod-list{ max-width:900px }
+.mod{ border-bottom:1px solid var(--line) }
+.mod:first-child{ border-top:1px solid var(--line) }
+.mod-btn{ display:flex; align-items:baseline; gap:22px; width:100%; padding:26px 0; text-align:left }
+.mod-num{ font-family:var(--mono); font-size:12px; color:var(--smoke); flex:none; width:22px }
+.mod-name{ font-family:var(--serif); font-style:italic; font-size:clamp(20px,3vw,30px); margin-right:auto; transition:color .3s }
+.mod.is-open .mod-name{ color:var(--red) }
+.mod-sign{ font-size:20px; color:var(--smoke); transition:transform .35s var(--ease), color .3s }
+.mod.is-open .mod-sign{ transform:rotate(45deg); color:var(--red) }
+.mod-body{ max-height:0; overflow:hidden; transition:max-height .5s var(--ease) }
+.mod.is-open .mod-body{ max-height:200px }
+.mod-body p{ font-size:14.5px; color:var(--ink-2); max-width:60ch; padding-bottom:26px }
+
+/* comparativo */
+.bars{ max-width:820px }
+.bar-item{ margin-bottom:34px }
+.bar-top{ display:flex; justify-content:space-between; margin-bottom:10px; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--ink-2) }
+.bar-verdict{ font-family:var(--serif); font-style:italic; font-size:18px }
+.bar-track{ height:14px; background:var(--paper-2); border-radius:2px; overflow:hidden }
+.bar-fill{ display:block; height:100%; width:0; transition:width 1.2s var(--ease) }
+.bars.in .bar-fill{ width:var(--w) }
+.bar-fin{ background:repeating-linear-gradient(135deg,#5C544C 0 8px,#4A423B 8px 16px) }
+.bar-con{ background:var(--red) }
+.bar-tag{ display:block; margin-top:9px; font-size:13px; color:var(--ink-2); max-width:60ch }
+
+/* sobre */
+.sec-sobre{ background:var(--paper-2) }
+.sobre-grid{ display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(30px,5vw,70px); align-items:start }
+.sobre-photo{ aspect-ratio:4/5; overflow:hidden; border-radius:2px }
+.sobre-photo img{ width:100%; height:100%; object-fit:cover; object-position:top center }
+.sobre-copy p{ font-size:16px; color:var(--ink-2); margin-bottom:18px; max-width:54ch }
+.vals{ margin:26px 0 30px }
+.vals li{ border-left:2px solid var(--red); padding:4px 0 4px 16px; margin-bottom:14px }
+.vals b{ font-family:var(--serif); font-style:italic; font-size:16px; display:block }
+.vals span{ font-size:13.5px; color:var(--ink-2) }
+
+@media(max-width:860px){ .sobre-grid{ grid-template-columns:1fr } .sobre-photo{ max-width:340px } }
+
+/* faq */
+.faq details{ border-top:1px solid var(--line) }
+.faq details:last-of-type{ border-bottom:1px solid var(--line) }
+.faq summary{ list-style:none; cursor:pointer; padding:22px 30px 22px 0; position:relative; font-family:var(--serif); font-style:italic; font-size:clamp(16px,2vw,20px) }
+.faq summary::-webkit-details-marker{ display:none }
+.faq summary::after{ content:'+'; position:absolute; right:0; top:20px; font-family:var(--sans); font-size:20px; color:var(--red); transition:transform .3s }
+.faq details[open] summary::after{ transform:rotate(45deg) }
+.faq p{ font-size:14.5px; color:var(--ink-2); padding-bottom:24px; max-width:66ch }
+
+/* cta final */
+.cta-final{ background:var(--red); padding-block:clamp(70px,9vw,120px); text-align:center; position:relative }
+.cta-final .tag{ color:rgba(255,255,255,.85) }
+.cta-h2{ font-family:var(--serif); font-style:italic; font-size:clamp(32px,6vw,64px); color:#fff; margin-bottom:18px }
+.cta-sub{ color:rgba(255,255,255,.92); max-width:52ch; margin:0 auto 32px; font-size:15.5px }
+.cta-btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap }
+.btn-white{ background:#fff; color:var(--red) }
+.btn-outline{ border:1px solid rgba(255,255,255,.5); color:#fff }
+.btn-outline:hover{ background:rgba(255,255,255,.15) }
+
+/* footer */
+footer{ padding-block:50px 26px; border-top:1px solid var(--line) }
+.foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; padding-bottom:30px }
+.foot-name{ font-family:var(--serif); font-style:italic; font-size:20px }
+.foot-role{ font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; color:var(--smoke); display:block; margin-top:4px }
+.foot-col{ display:flex; flex-direction:column; gap:8px; font-size:13.5px; color:var(--ink-2) }
+.foot-col a:hover{ color:var(--red) }
+.foot-legal{ border-top:1px solid var(--line); padding-top:20px; font-size:11px; color:var(--smoke); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px }
+
+.float-wpp{ position:fixed; right:18px; bottom:18px; z-index:400; width:52px; height:52px; border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center; opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .3s, transform .3s }
+.float-wpp.show{ opacity:1; transform:none; pointer-events:auto }
+.float-wpp svg{ width:24px; height:24px; fill:#fff }
+
+@media(max-width:860px){
+  .nav-links,.nav-wpp{ display:none } #burger{ display:block }
+  .hero-grid{ grid-template-columns:1fr } .hero-photo{ order:-1; max-width:280px; margin:0 auto 30px }
+  .steps{ grid-template-columns:1fr 1fr } .steps li{ border-right:none; border-bottom:1px solid var(--line); padding-bottom:24px; margin-bottom:10px }
+}
+@media(max-width:560px){ .steps{ grid-template-columns:1fr } }
+
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.001ms !important; transition-duration:.001ms !important }
+  .reveal{ opacity:1; transform:none } .bars .bar-fill{ width:var(--w) }
+}
+</style>
+</head>
+<body>
+
+<div id="loader" aria-hidden="true">
+  <img src="assets/embracon-logo.png" alt="">
+  <div class="loader-track"><i></i></div>
+</div>
+
+<nav id="nav">
+  <a href="#hero" class="nav-name">Enaila Rocha</a>
+  <ul class="nav-links">
+    <li><a href="#modalidades">Modalidades</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#duvidas">Dúvidas</a></li>
+  </ul>
+  <a href="https://wa.me/5511987839869?text=Ol%C3%A1%20Enaila%2C%20quero%20saber%20mais%20sobre%20cons%C3%B3rcio" target="_blank" rel="noopener" class="nav-wpp">WhatsApp</a>
+  <button id="burger" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i><i></i></button>
+</nav>
+
+<div id="drawer">
+  <a href="#modalidades">Modalidades</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#duvidas">Dúvidas</a>
+  <a href="https://wa.me/5511987839869" target="_blank" rel="noopener">WhatsApp</a>
+</div>
+
+<header id="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <span class="hero-eyebrow reveal">São Paulo · Anália Franco</span>
+      <h1 class="hero-name reveal">Enaila<br><span>Rocha</span></h1>
+      <p class="hero-role reveal">Gestora Comercial — Embracon Anália Franco</p>
+      <p class="hero-desc reveal">Conduzo famílias e empresas na formação de patrimônio por meio do consórcio — sem juros, com previsibilidade e um plano do tamanho do seu orçamento.</p>
+      <div class="hero-cta reveal">
+        <a href="https://wa.me/5511987839869?text=Ol%C3%A1%20Enaila%2C%20quero%20simular%20um%20cons%C3%B3rcio" target="_blank" rel="noopener" class="btn btn-red">Agendar uma conversa</a>
+        <a href="#modalidades" class="btn btn-line">Ver modalidades</a>
+      </div>
+    </div>
+    <figure class="hero-photo reveal">
+      <div class="hero-photo-frame">
+        <img src="assets/enaila-foto.png" alt="Enaila Rocha, Gestora Comercial da Embracon Anália Franco">
+      </div>
+      <img src="assets/embracon-logo.png" alt="" class="hero-mark">
+    </figure>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-row">
+    <span>Automóvel<i>·</i>Imóvel<i>·</i>Serviços<i>·</i>Pesados<i>·</i>Motos<i>·</i>Automóvel<i>·</i>Imóvel<i>·</i>Serviços<i>·</i>Pesados<i>·</i>Motos<i>·</i></span>
+    <span>Automóvel<i>·</i>Imóvel<i>·</i>Serviços<i>·</i>Pesados<i>·</i>Motos<i>·</i>Automóvel<i>·</i>Imóvel<i>·</i>Serviços<i>·</i>Pesados<i>·</i>Motos<i>·</i></span>
+  </div>
+</div>
+
+<section id="consorcio" class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">Como funciona</span>
+      <h2 class="h2">Compra planejada, não dívida cara</h2>
+      <p class="lead">O consórcio é um sistema de compra programada regulado pelo Banco Central. Um grupo se reúne para adquirir bens de mesma natureza e, a cada assembleia mensal, participantes são contemplados por sorteio ou por lance. Sem instituição financeira intermediando capital, não há juros.</p>
+    </div>
+    <ol class="steps reveal">
+      <li><span class="step-n">01</span><h3>Definição da carta</h3><p>Você escolhe o valor do bem e o prazo. A parcela é esse valor dividido pelos meses, mais a taxa de administração.</p></li>
+      <li><span class="step-n">02</span><h3>Formação do grupo</h3><p>Assembleias mensais começam assim que o grupo se forma. Você concorre desde a primeira, sem entrada.</p></li>
+      <li><span class="step-n">03</span><h3>Contemplação</h3><p>Por sorteio ou lance. Prazo definido pede estratégia de lance; flexibilidade permite aguardar e preservar capital.</p></li>
+      <li><span class="step-n">04</span><h3>Aquisição à vista</h3><p>Com a carta liberada, você negocia como comprador à vista — posição que costuma garantir desconto.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="modalidades" class="sec sec-mod">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">Modalidades</span>
+      <h2 class="h2">Quatro frentes de atuação</h2>
+      <p class="lead">Toque em cada uma para abrir.</p>
+    </div>
+    <ul class="mod-list reveal">
+      <li class="mod is-open">
+        <button class="mod-btn" aria-expanded="true"><span class="mod-num">01</span><span class="mod-name">Automóvel &amp; Moto</span><span class="mod-sign">+</span></button>
+        <div class="mod-body"><p>Zero quilômetro ou seminovo, nacional ou importado. Você escolhe marca, modelo e concessionária: a carta é poder de compra à vista.</p></div>
+      </li>
+      <li class="mod">
+        <button class="mod-btn" aria-expanded="false"><span class="mod-num">02</span><span class="mod-name">Imóvel</span><span class="mod-sign">+</span></button>
+        <div class="mod-body"><p>Residencial, comercial, terreno, construção ou reforma. Também serve para quitar financiamento em curso e parar de pagar juros.</p></div>
+      </li>
+      <li class="mod">
+        <button class="mod-btn" aria-expanded="false"><span class="mod-num">03</span><span class="mod-name">Serviços</span><span class="mod-sign">+</span></button>
+        <div class="mod-body"><p>Casamento, intercâmbio, formação acadêmica, procedimentos de saúde e viagens — projetos que costumam ficar em segundo plano.</p></div>
+      </li>
+      <li class="mod">
+        <button class="mod-btn" aria-expanded="false"><span class="mod-num">04</span><span class="mod-name">Pesados &amp; Frota</span><span class="mod-sign">+</span></button>
+        <div class="mod-body"><p>Caminhão, implemento, maquinário agrícola e equipamentos. Para o autônomo e para a empresa que quer expandir a frota sem comprometer o caixa.</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="comparativo" class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">Comparativo</span>
+      <h2 class="h2">O mesmo bem, dois preços diferentes</h2>
+      <p class="lead">Financiamento e consórcio levam ao mesmo bem. A diferença está no custo do caminho.</p>
+    </div>
+    <div class="bars reveal">
+      <div class="bar-item">
+        <div class="bar-top"><span>Financiamento bancário</span><span class="bar-verdict">bem mais caro</span></div>
+        <div class="bar-track"><i class="bar-fill bar-fin" style="--w:100%"></i></div>
+        <span class="bar-tag">O bem chega de imediato; o custo dessa antecipação são juros compostos do primeiro ao último vencimento.</span>
+      </div>
+      <div class="bar-item">
+        <div class="bar-top"><span>Consórcio Embracon</span><span class="bar-verdict" style="color:var(--red)">bem mais barato</span></div>
+        <div class="bar-track"><i class="bar-fill bar-con" style="--w:68%"></i></div>
+        <span class="bar-tag">Sem juros. Incide a taxa de administração, definida em contrato e diluída ao longo do plano.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" class="sec sec-sobre">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="tag">Sobre</span><h2 class="h2">Quem conduz o seu plano</h2></div>
+    <div class="sobre-grid">
+      <figure class="sobre-photo reveal"><img src="assets/enaila-foto.png" alt="Enaila Rocha"></figure>
+      <div class="sobre-copy">
+        <p class="reveal">Sou Gestora Comercial da franquia Embracon Anália Franco, em São Paulo. Cuido do atendimento, da negociação e do relacionamento com quem já é cliente — do primeiro contato até a liberação da carta.</p>
+        <p class="reveal">Antes de falar em parcela, pergunto qual é o plano: trocar de carro, sair do aluguel, ampliar a operação. Cada objetivo pede uma composição diferente de carta, prazo e estratégia de lance.</p>
+        <ul class="vals reveal">
+          <li><b>Transparência</b><span>Taxa, prazo e regra de contemplação, sempre antes da assinatura.</span></li>
+          <li><b>Acompanhamento</b><span>Do ingresso no grupo até a liberação da carta, com a mesma pessoa.</span></li>
+          <li><b>Estrutura</b><span>Uma das maiores administradoras do país, fiscalizada pelo Banco Central.</span></li>
+        </ul>
+        <a href="https://wa.me/5511987839869?text=Ol%C3%A1%20Enaila!" target="_blank" rel="noopener" class="btn btn-red reveal">Agendar uma conversa</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="duvidas" class="sec">
+  <div class="wrap" style="max-width:820px">
+    <div class="sec-head reveal"><span class="tag">Dúvidas</span><h2 class="h2">Perguntas frequentes</h2></div>
+    <div class="faq reveal">
+      <details><summary>Consórcio realmente não tem juros?</summary><p>Não há juros. Existe a taxa de administração, definida em contrato e diluída nas parcelas, que remunera a gestão do grupo.</p></details>
+      <details><summary>Quando eu recebo a carta?</summary><p>Na contemplação, por sorteio nas assembleias mensais ou por lance. Não há data garantida — quem precisa de prazo trabalha com estratégia de lance.</p></details>
+      <details><summary>Preciso de entrada?</summary><p>Não. Você entra pagando a primeira parcela e já concorre desde a primeira assembleia.</p></details>
+      <details><summary>Posso usar o FGTS?</summary><p>No consórcio de imóvel, sim, dentro das regras da Caixa — para dar lance, complementar a carta ou amortizar parcelas.</p></details>
+      <details><summary>E se eu quiser sair no meio?</summary><p>É possível transferir a cota ou solicitar desligamento, com devolução prevista em contrato após o encerramento do grupo.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final" id="contato">
+  <div class="wrap">
+    <span class="tag reveal">Vamos conversar</span>
+    <h2 class="cta-h2 reveal">Vamos falar sobre o seu próximo passo</h2>
+    <p class="cta-sub reveal">Sem compromisso. Você envia uma mensagem, eu respondo pessoalmente e avalio com franqueza se o consórcio é o instrumento certo para o seu objetivo.</p>
+    <div class="cta-btns reveal">
+      <a href="https://wa.me/5511987839869?text=Ol%C3%A1%20Enaila%2C%20vim%20pelo%20site" target="_blank" rel="noopener" class="btn btn-white">Chamar no WhatsApp</a>
+      <a href="https://instagram.com/enailarrocha" target="_blank" rel="noopener" class="btn btn-outline">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="foot-name">Enaila Rocha</span>
+        <span class="foot-role">Gestora Comercial · Embracon Anália Franco</span>
+      </div>
+      <div class="foot-col">
+        <a href="https://wa.me/5511987839869" target="_blank" rel="noopener">(11) 98783-9869</a>
+        <a href="https://instagram.com/enailarrocha" target="_blank" rel="noopener">@enailarrocha</a>
+      </div>
+      <div class="foot-col">
+        <a href="https://www.google.com/maps/search/?api=1&query=Rua+Itapura+1603+An%C3%A1lia+Franco+S%C3%A3o+Paulo" target="_blank" rel="noopener">Rua Itapura, 1603<br>Anália Franco · São Paulo/SP</a>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>© <span id="year">2026</span> Embracon Anália Franco</span>
+      <span>Nova AI Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5511987839869" target="_blank" rel="noopener" class="float-wpp" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81s-.39-.12-.56.13-.64.81-.79.98-.29.19-.54.06a6.7 6.7 0 0 1-1.99-1.23 7.4 7.4 0 0 1-1.37-1.71c-.14-.25-.01-.38.11-.5s.25-.29.37-.44.17-.25.25-.41.04-.31-.02-.44-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48a.93.93 0 0 0-.67.31 2.82 2.82 0 0 0-.87 2.09 4.88 4.88 0 0 0 1.02 2.59 11.2 11.2 0 0 0 4.28 3.79c.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18s.21-1.08.15-1.19-.23-.17-.48-.29"/></svg>
+</a>
+
+<script>
+(function(){
+  var $=function(s,c){return (c||document).querySelector(s)};
+  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  var loader=$('#loader');
+  window.addEventListener('load',function(){ setTimeout(function(){ loader.classList.add('gone'); setTimeout(function(){loader.remove()},700) },900) });
+
+  var y=$('#year'); if(y) y.textContent=new Date().getFullYear();
+
+  var nav=$('#nav'), float=$('.float-wpp');
+  window.addEventListener('scroll',function(){
+    var sy=window.scrollY||0;
+    nav.classList.toggle('stuck', sy>30);
+    float.classList.toggle('show', sy>window.innerHeight*0.6);
+  },{passive:true});
+
+  var burger=$('#burger'), drawer=$('#drawer');
+  burger.addEventListener('click',function(){
+    var open=!drawer.classList.contains('open');
+    drawer.classList.toggle('open',open); burger.classList.toggle('on',open);
+  });
+  $$('a',drawer).forEach(function(a){ a.addEventListener('click',function(){ drawer.classList.remove('open'); burger.classList.remove('on') }) });
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target) } });
+  },{threshold:.15});
+  $$('.reveal').forEach(function(el){ io.observe(el) });
+
+  $$('.mod').forEach(function(m){
+    $('.mod-btn',m).addEventListener('click',function(){
+      var open=m.classList.contains('is-open');
+      $$('.mod').forEach(function(x){ x.classList.remove('is-open'); $('.mod-btn',x).setAttribute('aria-expanded','false') });
+      if(!open){ m.classList.add('is-open'); $('.mod-btn',m).setAttribute('aria-expanded','true') }
+    });
+  });
+})();
+</script>
+</body>
+</html>
